@@ -16,7 +16,7 @@ class ListScreen extends Component {
   };
 
   componentDidMount() {
-    fetch('http://rate-things-backend.herokuapp.com/data')
+    fetch('http://159.89.35.183:5000/data')
       .then(result => result.json())
       .then(data => {
         console.log(data);
