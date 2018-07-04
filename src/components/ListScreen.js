@@ -30,7 +30,7 @@ class ListScreen extends Component {
     return (
       <div>
         {data}
-        <span className={css(styles.red)}>This is red.</span>
+        <span className={css(styles.red)}>THIS is red.</span>
         <span className={css(styles.hover)}>This turns red on hover.</span>
         <span className={css(styles.small)}>
           This turns red when the browser is less than 600px width.
