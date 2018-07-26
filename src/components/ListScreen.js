@@ -7,6 +7,7 @@ class ListScreen extends Component {
     super(props);
     this.state = {
       data: 'loading',
+      movies: [],
     };
   }
 
@@ -16,7 +17,11 @@ class ListScreen extends Component {
   };
 
   componentDidMount() {
-    fetch('http://159.89.35.183:5000/data')
+    this.fetchMovies()
+  }
+
+  fetchSampleData() {
+    fetch('http://0.0.0.0:5000/data')
       .then(result => result.json())
       .then(data => {
         console.log(data);
@@ -24,12 +29,27 @@ class ListScreen extends Component {
       });
   }
 
+  fetchMovies() {
+    fetch('http://0.0.0.0:5000/movies')
+      .then(result => result.json())
+      .then(movies => {
+        console.log(movies);
+        this.setState({ movies: movies});
+      });
+  }
+
   render() {
-    const { data } = this.state;
+    const { data, movies } = this.state;
+
+
+    const moviesList = movies.map(movie => <div> {movie.title} : {movie.rating} </div>)
 
     return (
       <div>
         {data}
+        <div>
+        {moviesList}
+        </div>
         <span className={css(styles.red)}>THIS is red.</span>
         <span className={css(styles.hover)}>This turns red on hover.</span>
         <span className={css(styles.small)}>
