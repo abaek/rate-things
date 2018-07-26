@@ -1,12 +1,24 @@
-import React, { Component } from 'react';
-import { StyleSheet, css } from 'aphrodite';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { StyleSheet, css } from "aphrodite";
+import PropTypes from "prop-types";
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
+const columns = [
+  {
+    Header: "Movie",
+    accessor: "title",
+  },
+  {
+    Header: "Rating",
+    accessor: "rating",
+  },
+];
 
 class ListScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: 'loading',
       movies: [],
     };
   }
@@ -17,49 +29,25 @@ class ListScreen extends Component {
   };
 
   componentDidMount() {
-    this.fetchMovies()
-  }
-
-  fetchSampleData() {
-    fetch('http://0.0.0.0:5000/data')
-      .then(result => result.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ data: data.movies[0].description });
-      });
+    this.fetchMovies();
   }
 
   fetchMovies() {
-    fetch('http://0.0.0.0:5000/movies')
+    fetch("http://0.0.0.0:5000/movies")
       .then(result => result.json())
       .then(movies => {
         console.log(movies);
-        this.setState({ movies: movies});
+        this.setState({ movies: movies });
       });
   }
 
   render() {
-    const { data, movies } = this.state;
-
-
-    const moviesList = movies.map(movie => <div> {movie.title} : {movie.rating} </div>)
+    const { movies } = this.state;
 
     return (
       <div>
-        {data}
-        <div>
-        {moviesList}
-        </div>
+        <ReactTable data={movies} columns={columns} />
         <span className={css(styles.red)}>THIS is red.</span>
-        <span className={css(styles.hover)}>This turns red on hover.</span>
-        <span className={css(styles.small)}>
-          This turns red when the browser is less than 600px width.
-        </span>
-        <span className={css(styles.red, styles.blue)}>This is blue.</span>
-        <span className={css(styles.blue, styles.small)}>
-          This is blue and turns red when the browser is less than 600px width.
-          Hello.
-        </span>
       </div>
     );
   }
@@ -67,23 +55,7 @@ class ListScreen extends Component {
 
 const styles = StyleSheet.create({
   red: {
-    backgroundColor: 'red',
-  },
-
-  blue: {
-    backgroundColor: 'blue',
-  },
-
-  hover: {
-    ':hover': {
-      backgroundColor: 'red',
-    },
-  },
-
-  small: {
-    '@media (max-width: 600px)': {
-      backgroundColor: 'red',
-    },
+    backgroundColor: "red",
   },
 });
 
