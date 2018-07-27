@@ -3,6 +3,7 @@ import { StyleSheet, css } from "aphrodite";
 import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import queryString from 'query-string'
 
 const columns = [
   {
@@ -20,6 +21,7 @@ class ListScreen extends Component {
     super(props);
     this.state = {
       movies: [],
+      isDesc: true,
     };
   }
 
@@ -29,6 +31,10 @@ class ListScreen extends Component {
   };
 
   componentDidMount() {
+    const values = queryString.parse(this.props.location.search)
+    if ('desc' in values && values.desc === 'false') {
+      this.setState({ isDesc: false})
+    }
     this.fetchMovies();
   }
 
@@ -42,11 +48,20 @@ class ListScreen extends Component {
   }
 
   render() {
-    const { movies } = this.state;
+    const { movies, isDesc } = this.state;
 
     return (
       <div>
-        <ReactTable data={movies} columns={columns} />
+        <ReactTable
+          data={movies}
+          columns={columns}
+          defaultSorted={[
+            {
+              id: "rating",
+              desc: isDesc,
+            },
+          ]}
+        />
         <span className={css(styles.red)}>THIS is red.</span>
       </div>
     );
