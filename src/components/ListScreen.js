@@ -3,7 +3,8 @@ import { StyleSheet, css } from "aphrodite";
 import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import queryString from 'query-string'
+import queryString from "query-string";
+import NavBar from "./NavBar.js";
 
 const columns = [
   {
@@ -31,9 +32,9 @@ class ListScreen extends Component {
   };
 
   componentDidMount() {
-    const values = queryString.parse(this.props.location.search)
-    if ('desc' in values && values.desc === 'false') {
-      this.setState({ isDesc: false})
+    const values = queryString.parse(this.props.location.search);
+    if ("desc" in values && values.desc === "false") {
+      this.setState({ isDesc: false });
     }
     this.fetchMovies();
   }
@@ -52,6 +53,7 @@ class ListScreen extends Component {
 
     return (
       <div>
+        <NavBar />
         <ReactTable
           data={movies}
           columns={columns}

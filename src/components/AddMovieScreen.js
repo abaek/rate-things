@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, css } from "aphrodite";
 import ReactStars from "react-stars";
+import NavBar from "./NavBar.js";
 
 class AddMovieScreen extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class AddMovieScreen extends Component {
 
     return (
       <div>
+      <NavBar/>
         <div>Add Movie:</div>
         <input value={title} onChange={this.titleChanged} />
         <div className={css(styles.middle)}>
